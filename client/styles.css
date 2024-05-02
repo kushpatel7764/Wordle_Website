@@ -88,4 +88,21 @@
   .status {
     margin-bottom: 10px;
   }
+
+ .restart_game{
+    height: 50px;
+    width: 100px;
+    color: #fff;
+    background-color:black;
+    border-radius: 20px;
+    border-color: transparent;
+    transition-duration: 0.2s;
+  }
+.restart_game:hover{
+    margin-top: 30px;
+    height: 55px;
+    width: 105px;
+    box-shadow: 10px;
+    background-color:rgb(43, 43, 43);
+  }
   
