@@ -378,6 +378,9 @@ function getInput(noBackspaceAtLength){
   return userGuess;
 }
 
+function refreshPage(){
+  window.location.reload();
+} 
 
 //chosenWord refreses like four times.
 function GameSetup(){
@@ -554,6 +557,7 @@ function GameSetup(){
         <p className="message"></p>
         <Board />
         <KeyBoard />
+        <button className="restart_game" onClick={refreshPage}>Restart</button>
       </section>
     </>
   )
