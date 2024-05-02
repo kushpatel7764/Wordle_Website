@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import WinPopup from './Win_Popup';
+import LosePopup from './Lose_Popup';
+
+
+
+var showWinPopup = false;
+var showLosePopup = false; 
 
 function Square() {
   return (
@@ -188,7 +195,7 @@ function legitGuess(guess, wordsArray){
       //if user's guess word is not in the word list then return false
     }else{
       //println("$guessNum. Your word does not exist in the file. Enter a legitimate word")
-      printMessage.innerHTML = (guess + " does not exist in the file. Enter a legitimate word");
+      printMessage.innerHTML = ("Enter a legitimate word");
       return false;
       
     }
@@ -295,8 +302,6 @@ function gameState(guess, word, row){
             //guess[g] - current letter;
             //word[j] - letter at word in forloop;  
             //(j >= g && guess[g] == words[j]) -- if at or after current index, the current letter is in word then no set multiOccurrence so yellow can be set. 
-            console.log("Guess letter:" + guess[g] + ", index:" + g)
-            console.log("Word letter:" + word[j] + ", index:" + j)
             if (j <= g && guess[g] == word[j]){
               multiOccurrence = false
               break
@@ -310,13 +315,6 @@ function gameState(guess, word, row){
     }
     // If the guess letter is at the same index as the word letter (they also have to be the same letters) and if it has appearance left in the word
     // then its color should be green
-    if (guess[g] == "e"){
-      console.log("letter: "+guess[g] + " Output for letter_in_word(): " + ((letter_in_word(guess[g], word))))
-      console.log("letter: "+guess[g] + " Output for wletterOccurences: " + ((wletterOccurrences[guess[g]] >= 1) ))
-      console.log("letter: "+guess[g] + " Output for multioccurance: " + ((multiOccurrence)))
-
-      
-    }
     if ((guess[g] == word[g]) && (wletterOccurrences[guess[g]] >= 1)) {
       //make the letter background color green
       //TODO: Make background green with Brenan's function
@@ -353,7 +351,8 @@ function gameOver(userInput, word, row){
   if (userInput == word){
       //if user guessed correctly then show the gamestate and congratulations
       gameState(userInput, word, row)
-      console.log("Congratulations")
+      showWinPopup = true;
+      printMessage.innerHTML = "Congratulations"
       return true
   }
   else{
@@ -362,6 +361,7 @@ function gameOver(userInput, word, row){
       console.log("try again")
       return false
   }
+
 
 }
 
@@ -386,6 +386,7 @@ function refreshPage(){
 function GameSetup(){
   const wordsArray = getAllWords();
   const chosenWord = chooseRandWordFromDict(wordsArray);
+
   //const chosenWord = "genes";
   //Get all the words from words dictonary.
   const [words, setWords] = useState([]);
@@ -424,17 +425,23 @@ function GameSetup(){
   //User Input
   useEffect(()=>{
     document.addEventListener("keydown", keyInputDetected, true);
+    
   }, [])
   
   //Only called when a key is pressed
   const keyInputDetected = (e)=>{ 
     var chosenWord = word.join("");
     if (guessCorrect == true){
+      showWinPopup = true;
+
+      console.log(showLosePopup);
       return;
     }
     if (guessNumber >= 5){
       var printMessage = document.getElementsByClassName("message")[0]; 
       printMessage.innerHTML = "The correct word is " + chosenWord;
+      showLosePopup = true;
+      console.log(showLosePopup);
     }
     //Length of myArray after a key from 'keydown' is added
     if (!arrayfull){
