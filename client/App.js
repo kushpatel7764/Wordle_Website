@@ -437,7 +437,7 @@ function GameSetup(){
       console.log(showLosePopup);
       return;
     }
-    if (guessNumber >= 5){
+    if (guessNumber >= 6){
       var printMessage = document.getElementsByClassName("message")[0]; 
       printMessage.innerHTML = "The correct word is " + chosenWord;
       showLosePopup = true;
@@ -463,10 +463,11 @@ function GameSetup(){
         let onCurrentSquareEnterNotPressedPreviously = (noBackspaceAtLength != previousLength);
 
         //length -1 = last index
-        if ((rowComplete && (enterPressed == false)) && (onFirstRow ||  onCurrentSquareEnterNotPressedPreviously)){
+        if ((rowComplete && (enterPressed == false)) && (rowComplete && (onFirstRow ||  onCurrentSquareEnterNotPressedPreviously))){
           //if the last key placed in array is not "Enter" then remove the last thing placed from array and return.
           //if the last key placed is "Enter" then do the checks and proceed.
           if (myArray[currentLetterIndex] == "Enter"){
+            console.log("Enter Pressed");
             //Get userGuess
             var userGuess = getInput(noBackspaceAtLength);
             console.log(userGuess);
@@ -474,8 +475,6 @@ function GameSetup(){
             //Make sure legit word sets noBackspaceAfterLength as well. 
             // if the guess word is in wordle.txt then continue else repeat the guess
             if (legitGuess(userGuess.toLowerCase(), words)) {
-              //each time user guesses with a legit guess increase his guess amount
-              guessNumber += 1
               //if the user guessed correctly then exit
               console.log("chosenWord = " + chosenWord)
               if(gameOver(userGuess.toLowerCase(), chosenWord, noBackspaceAtLength)){
@@ -485,6 +484,9 @@ function GameSetup(){
               //Remove the "Enter" from array and save the row
               myArray.pop();
               enterPressed = true;
+              //each time user guesses with a legit guess increase his guess amount
+              guessNumber += 1
+              console.log("Incrementing, guess number is now: " + guessNumber);
               noBackspaceAtLength=(previousLength);
               return;
             }
