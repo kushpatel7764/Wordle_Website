@@ -5,8 +5,7 @@ import LosePopup from './Lose_Popup';
 
 
 
-var showWinPopup = false;
-var showLosePopup = false; 
+
 
 function Square() {
   return (
@@ -351,7 +350,6 @@ function gameOver(userInput, word, row){
   if (userInput == word){
       //if user guessed correctly then show the gamestate and congratulations
       gameState(userInput, word, row)
-      showWinPopup = true;
       printMessage.innerHTML = "Congratulations"
       return true
   }
@@ -421,6 +419,10 @@ function GameSetup(){
   var onlyLetters = /^[a-zA-Z]$/; 
   var guessNumber = 0;  //If guessNumber is like 7 then end with win or lose
   var guessCorrect = false;
+  const [winPopup, setWinPopup] = useState (false);
+  const [losePopup, setLosePopup] = useState (false);
+  var showWinPopup = false;
+  var showLosePopup = false; 
   //TODO: only let the user in aplhabets
   //User Input
   useEffect(()=>{
@@ -432,16 +434,16 @@ function GameSetup(){
   const keyInputDetected = (e)=>{ 
     var chosenWord = word.join("");
     if (guessCorrect == true){
-      showWinPopup = true;
+      setWinPopup(true)
 
-      console.log(showLosePopup);
+      console.log("WinPopup is: " + showWinPopup);
       return;
     }
     if (guessNumber >= 6){
       var printMessage = document.getElementsByClassName("message")[0]; 
       printMessage.innerHTML = "The correct word is " + chosenWord;
-      showLosePopup = true;
-      console.log(showLosePopup);
+      setLosePopup(true);
+      console.log("LosePopup is: " + showLosePopup);
     }
     //Length of myArray after a key from 'keydown' is added
     if (!arrayfull){
@@ -467,10 +469,8 @@ function GameSetup(){
           //if the last key placed in array is not "Enter" then remove the last thing placed from array and return.
           //if the last key placed is "Enter" then do the checks and proceed.
           if (myArray[currentLetterIndex] == "Enter"){
-            console.log("Enter Pressed");
             //Get userGuess
             var userGuess = getInput(noBackspaceAtLength);
-            console.log(userGuess);
             //DO checks like if the word is legit and assign color to squares and keyboard here.
             //Make sure legit word sets noBackspaceAfterLength as well. 
             // if the guess word is in wordle.txt then continue else repeat the guess
@@ -486,7 +486,6 @@ function GameSetup(){
               enterPressed = true;
               //each time user guesses with a legit guess increase his guess amount
               guessNumber += 1
-              console.log("Incrementing, guess number is now: " + guessNumber);
               noBackspaceAtLength=(previousLength);
               return;
             }
@@ -566,17 +565,16 @@ function GameSetup(){
         <p className="message"></p>
         <Board />
         <KeyBoard />
-        <WinPopup trigger={showWinPopup}>
+        <WinPopup trigger={winPopup}>
           <h3>CONGRATULATIONS</h3>
           <p id="you_guess_it"> You guess the word!</p>
-          <button className="restart_game" onClick="refreshPage()">Restart</button>
+          <button className="restart_game" onClick={refreshPage}>Restart</button>
         </WinPopup>
-        <LosePopup trigger={showLosePopup}>
+        <LosePopup trigger={losePopup}>
         <h3>ERROR</h3>
           <p id="you_guess_it">Too many incorrect guesses!</p>
-          <button className="restart_game" onClick="refreshPage()">Restart</button>
+          <button className="restart_game" onClick={refreshPage}>Restart</button>
         </LosePopup>
-        <button className="restart_game" onClick={refreshPage}>Restart</button>
       </section>
     </>
   )
