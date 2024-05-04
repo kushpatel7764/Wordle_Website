@@ -566,6 +566,16 @@ function GameSetup(){
         <p className="message"></p>
         <Board />
         <KeyBoard />
+        <WinPopup trigger={showWinPopup}>
+          <h3>CONGRATULATIONS</h3>
+          <p id="you_guess_it"> You guess the word!</p>
+          <button className="restart_game" onClick="refreshPage()">Restart</button>
+        </WinPopup>
+        <LosePopup trigger={showLosePopup}>
+        <h3>ERROR</h3>
+          <p id="you_guess_it">Too many incorrect guesses!</p>
+          <button className="restart_game" onClick="refreshPage()">Restart</button>
+        </LosePopup>
         <button className="restart_game" onClick={refreshPage}>Restart</button>
       </section>
     </>
