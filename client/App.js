@@ -435,15 +435,12 @@ function GameSetup(){
     var chosenWord = word.join("");
     if (guessCorrect == true){
       setWinPopup(true)
-
-      console.log("WinPopup is: " + showWinPopup);
       return;
     }
     if (guessNumber >= 6){
       var printMessage = document.getElementsByClassName("message")[0]; 
       printMessage.innerHTML = "The correct word is " + chosenWord;
       setLosePopup(true);
-      console.log("LosePopup is: " + showLosePopup);
     }
     //Length of myArray after a key from 'keydown' is added
     if (!arrayfull){
