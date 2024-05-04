@@ -440,7 +440,6 @@ function GameSetup(){
     if (guessNumber >= 6){
       var printMessage = document.getElementsByClassName("message")[0]; 
       printMessage.innerHTML = "The correct word is " + chosenWord;
-      setLosePopup(true);
     }
     //Length of myArray after a key from 'keydown' is added
     if (!arrayfull){
@@ -468,21 +467,27 @@ function GameSetup(){
           if (myArray[currentLetterIndex] == "Enter"){
             //Get userGuess
             var userGuess = getInput(noBackspaceAtLength);
+            
             //DO checks like if the word is legit and assign color to squares and keyboard here.
             //Make sure legit word sets noBackspaceAfterLength as well. 
             // if the guess word is in wordle.txt then continue else repeat the guess
             if (legitGuess(userGuess.toLowerCase(), words)) {
               //if the user guessed correctly then exit
+              //each time user guesses with a legit guess increase his guess amount
+              guessNumber += 1
               console.log("chosenWord = " + chosenWord)
               if(gameOver(userGuess.toLowerCase(), chosenWord, noBackspaceAtLength)){
                 guessCorrect = true;
+                setWinPopup(true);
+                
                 return;
               } 
               //Remove the "Enter" from array and save the row
               myArray.pop();
               enterPressed = true;
-              //each time user guesses with a legit guess increase his guess amount
-              guessNumber += 1
+              if (guessNumber >= 6){
+                setLosePopup(true);
+              }
               noBackspaceAtLength=(previousLength);
               return;
             }
