@@ -478,15 +478,21 @@ function GameSetup(){
               console.log("chosenWord = " + chosenWord)
               if(gameOver(userGuess.toLowerCase(), chosenWord, noBackspaceAtLength)){
                 guessCorrect = true;
-                setWinPopup(true);
                 
+                setTimeout(()=>{
+                  setWinPopup(true);
+                }, 1000)
                 return;
               } 
               //Remove the "Enter" from array and save the row
               myArray.pop();
               enterPressed = true;
               if (guessNumber >= 6){
-                setLosePopup(true);
+               
+                setTimeout(()=>{
+                  setLosePopup(true);
+                }, 1000)
+              
               }
               noBackspaceAtLength=(previousLength);
               return;
