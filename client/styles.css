@@ -98,10 +98,9 @@
     transition-duration: 0.2s;
   }
 .restart_game:hover{
-    margin-top: 30px;
+    margin-top: 5px;
     height: 52px;
     width: 102px;
-    box-shadow: 10px;
     background-color:rgb(43, 43, 43);
   }
   
