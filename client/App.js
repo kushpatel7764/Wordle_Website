@@ -581,6 +581,7 @@ function GameSetup(){
         <LosePopup trigger={losePopup}>
         <h3>ERROR</h3>
           <p id="you_guess_it">Too many incorrect guesses!</p>
+          <p id="word_given">The word is {word}</p>
           <button className="restart_game" onClick={refreshPage}>Restart</button>
         </LosePopup>
       </section>
